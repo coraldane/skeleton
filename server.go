@@ -86,6 +86,12 @@ func (this *serverConnection) OnDisconnected(session *proto.TcpSession) {
 	this.connListener.OnDisconnected(session)
 }
 
+func (this *serverConnection) OnAck(msg *proto.Message) {
+	if authConnListener, ok := this.connListener.(proto.AuthConnection); ok {
+		authConnListener.OnAck(msg)
+	}
+}
+
 func (this *serverConnection) HandleMessage(session *proto.TcpSession, msg *proto.Message) {
 	this.connListener.HandleMessage(session, msg)
 
@@ -102,9 +108,7 @@ func (this *serverConnection) HandleMessage(session *proto.TcpSession, msg *prot
 		logger.Debug("Enter:", string(msg.Body))
 		doCheckAuth(session, msg)
 	case proto.ACK:
-		if authConnListener, ok := this.connListener.(proto.AuthConnection); ok {
-			authConnListener.OnAck(msg)
-		}
+		this.OnAck(msg)
 	case proto.REQUEST:
 		tcpRequest := &proto.TcpRequest{}
 		tcpRequest.Decode(msg.Body)

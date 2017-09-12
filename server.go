@@ -6,8 +6,8 @@ import (
 
 	"github.com/coraldane/logger"
 
+	"github.com/coraldane/skeleton/proto"
 	"gitlab.tarzip.com/udai/HangZhouMaJiang/common"
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/skeleton/proto"
 )
 
 func StartServer(addr string, connListener proto.Connection, tcpServer *TcpServer) error {

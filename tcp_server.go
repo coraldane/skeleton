@@ -1,7 +1,7 @@
 package skeleton
 
 import (
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/skeleton/proto"
+	"github.com/coraldane/skeleton/proto"
 )
 
 type TcpServer struct {

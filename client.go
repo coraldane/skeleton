@@ -5,7 +5,7 @@ import (
 
 	"encoding/json"
 	"github.com/coraldane/logger"
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/skeleton/proto"
+	"github.com/coraldane/skeleton/proto"
 	"gitlab.tarzip.com/udai/HangZhouMaJiang/utils"
 )
 

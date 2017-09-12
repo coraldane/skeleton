@@ -7,8 +7,8 @@ import (
 
 	"github.com/coraldane/logger"
 
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/skeleton/io"
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/skeleton/proto"
+	"github.com/coraldane/skeleton/io"
+	"github.com/coraldane/skeleton/proto"
 )
 
 func doCheckAuth(session *proto.TcpSession, msg *proto.Message) {

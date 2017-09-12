@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/skeleton/io"
+	"github.com/coraldane/skeleton/io"
 )
 
 /**

@@ -10,6 +10,7 @@ type AuthConnection interface {
 	Connection
 
 	DoAuth(session *TcpSession, auth *LoginAuth) *Response
+	OnAck(msg *Message)
 }
 
 type ClientConnection interface {

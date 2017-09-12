@@ -2,12 +2,10 @@ package proto
 
 import (
 	"bufio"
+	"github.com/coraldane/logger"
+	"github.com/coraldane/utils"
 	"net"
 	"time"
-
-	"github.com/coraldane/logger"
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/g"
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/utils"
 )
 
 // TcpSession represent a user connection's context
@@ -36,7 +34,7 @@ func NewTcpSession(conn *net.TCPConn, connListener Connection) *TcpSession {
 		inst.ConnectionListener.OnConnected(inst)
 		if _, ok := connListener.(AuthConnection); ok {
 			//15秒内如果用户不登陆，则将连接断开
-			time.AfterFunc(time.Duration(g.Config().Timeout.LogicHeartbeat)*time.Second, inst.CheckIfLogined)
+			time.AfterFunc(time.Duration(15)*time.Second, inst.CheckIfLogined)
 		}
 	}
 	return inst

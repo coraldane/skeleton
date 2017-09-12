@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"github.com/coraldane/logger"
 	"github.com/coraldane/skeleton/proto"
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/utils"
+	"github.com/coraldane/utils"
 )
 
 func ConnectServer(addr string, clientConn proto.ClientConnection) error {

@@ -3,7 +3,7 @@ package skeleton
 import (
 	nlist "github.com/coraldane/container/list"
 	"github.com/coraldane/logger"
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/models"
+	"github.com/coraldane/skeleton/models"
 	"time"
 )
 

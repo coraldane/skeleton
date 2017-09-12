@@ -4,8 +4,16 @@ import (
 	"sync"
 
 	"encoding/json"
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/g"
+	"github.com/magiconair/properties"
 )
+
+var (
+	Props *properties.Properties
+)
+
+func init() {
+	Props, _ = properties.LoadFile("zh_CN.properties", properties.UTF8)
+}
 
 type Response struct {
 	sync.RWMutex
@@ -41,7 +49,7 @@ func (this *Response) IsSuccess() bool {
 func (this *Response) Build() {
 	this.dataMap["code"] = this.Code
 	if _, ok := this.dataMap["message"]; !ok {
-		this.dataMap["message"] = g.Props.GetString(this.Code, "unknown")
+		this.dataMap["message"] = Props.GetString(this.Code, "unknown")
 	}
 }
 

@@ -1,13 +1,10 @@
 package skeleton
 
 import (
+	"github.com/coraldane/logger"
+	"github.com/coraldane/skeleton/proto"
 	"net"
 	"time"
-
-	"github.com/coraldane/logger"
-
-	"github.com/coraldane/skeleton/proto"
-	"gitlab.tarzip.com/udai/HangZhouMaJiang/common"
 )
 
 func StartServer(addr string, connListener proto.Connection, tcpServer *TcpServer) error {
@@ -105,8 +102,9 @@ func (this *serverConnection) HandleMessage(session *proto.TcpSession, msg *prot
 		logger.Debug("Enter:", string(msg.Body))
 		doCheckAuth(session, msg)
 	case proto.ACK:
-		prm := &common.PushRequestManager{}
-		prm.Ack(msg.MsgId)
+		if authConnListener, ok := this.connListener.(proto.AuthConnection); ok {
+			authConnListener.OnAck(msg)
+		}
 	case proto.REQUEST:
 		tcpRequest := &proto.TcpRequest{}
 		tcpRequest.Decode(msg.Body)

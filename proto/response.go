@@ -12,7 +12,7 @@ var (
 )
 
 func init() {
-	Props, _ = properties.LoadFile("zh_CN.properties", properties.UTF8)
+	Props, _ = properties.LoadFile("i18n.properties", properties.UTF8)
 }
 
 type Response struct {

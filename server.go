@@ -112,7 +112,7 @@ func (this *serverConnection) HandleMessage(session *proto.TcpSession, msg *prot
 	case proto.REQUEST:
 		tcpRequest := &proto.TcpRequest{}
 		tcpRequest.Decode(msg.Body)
-		logger.Debug("Request:", msg.MsgId, msg.Flag, tcpRequest.Method, string(tcpRequest.Data))
+		logger.Debug("Request:", session.GetUserId(), msg.MsgId, msg.Flag, tcpRequest.Method, string(tcpRequest.Data))
 
 		if "" == tcpRequest.Method {
 			session.WriteError(msg, "method name empty")

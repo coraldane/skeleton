@@ -3,7 +3,6 @@ package proto
 import (
 	"bufio"
 	"github.com/coraldane/logger"
-	"github.com/coraldane/skeleton/models"
 	"github.com/coraldane/utils"
 	"net"
 	"time"
@@ -82,16 +81,6 @@ func (this *TcpSession) Write(msg *Message) error {
 
 	if PING != msg.Cmd {
 		logger.Debug("write", this.userId, msg.MsgHead, string(msg.Body))
-		tcpMsg := &models.TcpMessage{}
-		tcpMsg.MsgId = msg.MsgId
-		tcpMsg.Version = msg.Version
-		tcpMsg.Cmd = msg.Cmd
-		tcpMsg.Flag = msg.Flag
-		tcpMsg.Ext = msg.Ext
-		tcpMsg.Length = msg.Length
-		tcpMsg.Body = string(msg.Body)
-
-		tcpMsg.Save()
 	}
 
 	data := msg.Encode()

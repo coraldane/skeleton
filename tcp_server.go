@@ -6,46 +6,46 @@ import (
 )
 
 type TcpServer struct {
-	sync.RWMutex
-	m_sessionDict map[string]*proto.TcpSession
+	m_sessionDict *sync.Map
 }
 
 func NewTcpServer() *TcpServer {
 	inst := TcpServer{}
-	inst.m_sessionDict = make(map[string]*proto.TcpSession)
+	inst.m_sessionDict = &sync.Map{}
 	return &inst
 }
 
 func (this *TcpServer) PutSession(uniqueKey string, session *proto.TcpSession) {
-	this.Lock()
-	defer this.Unlock()
-
-	this.m_sessionDict[uniqueKey] = session
+	this.m_sessionDict.Store(uniqueKey, session)
 }
 
 func (this *TcpServer) GetSession(uniqueKey string) *proto.TcpSession {
-	this.Lock()
-	defer this.Unlock()
-	return this.m_sessionDict[uniqueKey]
+	if val, ok := this.m_sessionDict.Load(uniqueKey); ok {
+		return val.(*proto.TcpSession)
+	}
+	return nil
 }
 
 func (this *TcpServer) DeleteSession(uniqueKey string) {
-	this.Lock()
-	defer this.Unlock()
-	delete(this.m_sessionDict, uniqueKey)
+	this.m_sessionDict.Delete(uniqueKey)
 }
 
 func (this *TcpServer) GetUniqueKeys() []string {
-	this.Lock()
-	defer this.Unlock()
-
 	keys := make([]string, 0)
-	for kv, _ := range this.m_sessionDict {
-		keys = append(keys, kv)
-	}
+	this.m_sessionDict.Range(func(key, val interface{}) bool {
+		if text, ok := key.(string); ok {
+			keys = append(keys, text)
+		}
+		return true
+	})
 	return keys
 }
 
 func (this *TcpServer) SessionCount() int {
-	return len(this.m_sessionDict)
+	retValue := 0
+	this.m_sessionDict.Range(func(key, val interface{}) bool {
+		retValue += 1
+		return true
+	})
+	return retValue
 }

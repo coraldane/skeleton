@@ -46,7 +46,7 @@ func handleConnection(session *proto.TcpSession) {
 				continue
 			}
 		} else {
-			logger.Error("read data from conn error", err)
+			logger.Warn("read data from conn error", err)
 			session.Close()
 			break
 		}

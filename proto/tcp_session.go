@@ -133,8 +133,8 @@ func (this *TcpSession) CloseSafely() {
 		this.ConnectionListener.OnDisconnected(this)
 	}
 
-	//3秒后再关闭连接
-	time.AfterFunc(time.Second*time.Duration(3), func() {
+	//1秒后再关闭连接
+	time.AfterFunc(time.Second, func() {
 		// net.Conn可以多次关闭
 		this.Conn.Close()
 	})

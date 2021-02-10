@@ -1,9 +1,9 @@
 package skeleton
 
 import (
-	nlist "github.com/coraldane/container/list"
 	"github.com/coraldane/logger"
 	"github.com/coraldane/skeleton/models"
+	nlist "github.com/toolkits/container/list"
 	"time"
 )
 

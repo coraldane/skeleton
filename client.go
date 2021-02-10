@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"github.com/coraldane/logger"
 	"github.com/coraldane/skeleton/proto"
-	"github.com/coraldane/utils"
+	"github.com/coraldane/toolkits/encode"
 )
 
 func ConnectServer(addr string, clientConn proto.ClientConnection) error {
@@ -22,7 +22,7 @@ func ConnectServer(addr string, clientConn proto.ClientConnection) error {
 	//write ping message first
 	msg := proto.NewMessage()
 	msg.Cmd = proto.PING
-	msg.MsgId = utils.Md5Hex(utils.GetUUID())
+	msg.MsgId = encode.Md5Hex(encode.GetUUID())
 	session.Write(msg)
 
 	go handleConnection(session)

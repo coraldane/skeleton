@@ -3,7 +3,7 @@ package proto
 import (
 	"bufio"
 	"github.com/coraldane/logger"
-	"github.com/coraldane/utils"
+	"github.com/coraldane/toolkits/encode"
 	"net"
 	"time"
 )
@@ -26,7 +26,7 @@ func NewTcpSession(conn *net.TCPConn, connListener Connection) *TcpSession {
 	inst.BR = bufio.NewReader(conn)
 	inst.GmtConnect = time.Now()
 	inst.RemoteAddr = conn.RemoteAddr().String()
-	inst.UniqueKey = utils.GetUUID()
+	inst.UniqueKey = encode.GetUUID()
 
 	inst.ConnectionListener = connListener
 
@@ -80,7 +80,7 @@ func (this *TcpSession) Write(msg *Message) error {
 	msg.Length = len(msg.Body)
 
 	if PING != msg.Cmd {
-		logger.Debug("write", this.userId, msg.MsgHead, string(msg.Body))
+		logger.Debug("write userId: %d, head: %v, body: %s", this.userId, msg.MsgHead, string(msg.Body))
 	}
 
 	data := msg.Encode()
@@ -94,7 +94,7 @@ func (this *TcpSession) Write(msg *Message) error {
 		time.Sleep(100 * time.Millisecond)
 	}
 
-	logger.Error(err)
+	logger.Error("error: %v", err)
 	return err
 }
 
@@ -125,7 +125,7 @@ func (this *TcpSession) CloseSafely() {
 
 	msg := NewMessage()
 	msg.Cmd = CLOSE
-	msg.MsgId = utils.Md5Hex(utils.GetUUID())
+	msg.MsgId = encode.Md5Hex(encode.GetUUID())
 	this.Write(msg)
 
 	this.hasClosed = true

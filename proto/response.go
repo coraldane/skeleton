@@ -2,17 +2,16 @@ package proto
 
 import (
 	"sync"
-
 	"encoding/json"
-	"github.com/magiconair/properties"
+	"github.com/astaxie/beego/config"
 )
 
 var (
-	Props *properties.Properties
+	conf config.Configer
 )
 
 func init() {
-	Props, _ = properties.LoadFile("i18n.properties", properties.UTF8)
+	conf ,_ = config.NewConfig("ini", "i18n.properties")
 }
 
 type Response struct {
@@ -49,7 +48,7 @@ func (this *Response) IsSuccess() bool {
 func (this *Response) Build() {
 	this.dataMap["code"] = this.Code
 	if _, ok := this.dataMap["message"]; !ok {
-		this.dataMap["message"] = Props.GetString(this.Code, "unknown")
+		this.dataMap["message"] = conf.String(this.Code)
 	}
 }
 

@@ -1,12 +1,6 @@
-github.com/coraldane/logger v0.0.0-20200423034437-f3eeecab5728 h1:47XjnP8SAUiFcvVSi4V3HWW/tVkxl5iJ86FtZLI+/XY=
 github.com/coraldane/logger v0.0.0-20200423034437-f3eeecab5728/go.mod h1:y/TJyGSnEMsVipCf6/cupoLv33riUPeTmEQ89ztU184=
-github.com/coraldane/toolkits v0.0.0-20200627103119-3526409b6868 h1:ZHNXeSCj+/foi/6C7XBQHD2YOSrl6UxCdoRcH0btWI8=
-github.com/coraldane/toolkits v0.0.0-20200627103119-3526409b6868/go.mod h1:NsVSHmSD8bVyWKZvp+BSBTV+MIk9PY+fVcXKvR7a/oo=
-github.com/google/uuid v1.0.0 h1:b4Gk+7WdP/d3HZH8EJsZpvV7EtDOgaZLtnaNGIu1adA=
+github.com/coraldane/toolkits v0.0.0-20210211035157-b39b2f63a5d6 h1:pn0Sop/4BXV2K07ghFxoxu/33RrrdxUGJaBC1CMijbE=
+github.com/coraldane/toolkits v0.0.0-20210211035157-b39b2f63a5d6/go.mod h1:NsVSHmSD8bVyWKZvp+BSBTV+MIk9PY+fVcXKvR7a/oo=
 github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/magiconair/properties v1.8.4 h1:8KGKTcQQGm0Kv7vEbKFErAoAOFyyacLStRtQSeYtvkY=
 github.com/magiconair/properties v1.8.4/go.mod h1:y3VJvCyxH9uVvJTWEGAELF3aiYNyPKd5NZ3oSwXrF60=
-github.com/pborman/uuid v1.2.1 h1:+ZZIw58t/ozdjRaXh/3awHfmWRbzYxJoAdNJxe/3pvw=
 github.com/pborman/uuid v1.2.1/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtPdI/k=
-github.com/toolkits/container v0.0.0-20151219225805-ba7d73adeaca h1:bUNxqD2ULaaoBA5RLX6YJThj2c75S1BUMT4BmzqkE40=
-github.com/toolkits/container v0.0.0-20151219225805-ba7d73adeaca/go.mod h1:Z1hsEp8J9dDg5gRss4uixVSS19XDA4dw6S9ZcBm+hB8=

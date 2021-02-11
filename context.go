@@ -3,7 +3,7 @@ package skeleton
 import (
 	"github.com/coraldane/logger"
 	"github.com/coraldane/skeleton/models"
-	nlist "github.com/toolkits/container/list"
+	"github.com/coraldane/toolkits/container"
 	"time"
 )
 
@@ -11,13 +11,13 @@ type Context struct {
 	userId           int64
 	SessionUniqueKey string
 	pushFunc         func(*models.PushRequest)
-	pushRequestList  *nlist.SafeList
+	pushRequestList  *container.SafeList
 }
 
 func NewContext(otherId int64) *Context {
 	inst := &Context{}
 	inst.userId = otherId
-	inst.pushRequestList = nlist.NewSafeList()
+	inst.pushRequestList = container.NewSafeList()
 	return inst
 }
 

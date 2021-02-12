@@ -15,7 +15,7 @@ func StartServer(addr string, connListener proto.Connection, tcpServer *TcpServe
 	}
 	defer listener.Close()
 
-	logger.Info("listen tcp server at", addr)
+	logger.Info("listen tcp server at %s", addr)
 
 	if nil == tcpServer {
 		tcpServer = NewTcpServer()
@@ -24,7 +24,7 @@ func StartServer(addr string, connListener proto.Connection, tcpServer *TcpServe
 	for {
 		conn, err := listener.AcceptTCP()
 		if nil != err {
-			logger.Error("accept new client error", err)
+			logger.Error("accept new client error: %v", err)
 			continue
 		}
 
@@ -46,7 +46,7 @@ func handleConnection(session *proto.TcpSession) {
 				continue
 			}
 		} else {
-			logger.Warn("read data from conn error", err)
+			logger.Warn("read data from conn error %v", err)
 			session.Close()
 			break
 		}
@@ -74,14 +74,14 @@ func newServerConnection(listener proto.Connection, tcpServer *TcpServer) *serve
 
 func (this *serverConnection) OnConnected(session *proto.TcpSession) {
 	this.tcpServer.PutSession(session.UniqueKey, session)
-	logger.Info("accept conn from ", session.RemoteAddr, ", conn num:", this.tcpServer.SessionCount())
+	logger.Info("accept conn from %s, connection num: %d", session.RemoteAddr, this.tcpServer.SessionCount())
 
 	this.connListener.OnConnected(session)
 }
 
 func (this *serverConnection) OnDisconnected(session *proto.TcpSession) {
 	this.tcpServer.DeleteSession(session.UniqueKey)
-	logger.Info("connection closed ", session.RemoteAddr, session.GetUserId(), ", conn num:", this.tcpServer.SessionCount())
+	logger.Info("connection closed %s, connection num: %d", session.RemoteAddr, session.GetUserId(), this.tcpServer.SessionCount())
 
 	this.connListener.OnDisconnected(session)
 }
@@ -97,7 +97,7 @@ func (this *serverConnection) HandleMessage(session *proto.TcpSession, msg *prot
 
 	go func() {
 		if err := recover(); nil != err {
-			logger.Error("handle message error", err)
+			logger.Error("handle message error %v", err)
 		}
 	}()
 
@@ -105,14 +105,14 @@ func (this *serverConnection) HandleMessage(session *proto.TcpSession, msg *prot
 	case proto.PING:
 		session.Write(msg)
 	case proto.ENTER:
-		logger.Debug("Enter:", string(msg.Body))
+		logger.Debug("Enter: %s", string(msg.Body))
 		doCheckAuth(session, msg)
 	case proto.ACK:
 		this.OnAck(msg)
 	case proto.REQUEST:
 		tcpRequest := &proto.TcpRequest{}
 		tcpRequest.Decode(msg.Body)
-		logger.Debug("Request:", session.GetUserId(), msg.MsgId, msg.Flag, tcpRequest.Method, string(tcpRequest.Data))
+		logger.Debug("Request>>>===userId: %d, msgId: %s, flag: %v, method: %d, body: %s", session.GetUserId(), msg.MsgId, msg.Flag, tcpRequest.Method, string(tcpRequest.Data))
 
 		if "" == tcpRequest.Method {
 			session.WriteError(msg, "method name empty")

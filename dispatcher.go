@@ -54,7 +54,7 @@ func handleRequest(session *proto.TcpSession, msg *proto.Message, tcpRequest *pr
 
 	err := reader.ReadArray(inParams)
 	if nil != err {
-		logger.Error("unserialize input params error, method:", tcpRequest.Method, string(tcpRequest.Data), err)
+		logger.Error("deserialize params error, method: %s, body: %s, error: %v", tcpRequest.Method, string(tcpRequest.Data), err)
 		session.WriteError(msg, "params error")
 		return
 	}
@@ -83,7 +83,7 @@ func handleRequest(session *proto.TcpSession, msg *proto.Message, tcpRequest *pr
 		return
 	}
 
-	responseContent := formatReponseContent(results)
+	responseContent := formatResponseContent(results)
 	msg.Cmd = uint8(proto.RESPONSE)
 	msg.Body = []byte(responseContent)
 
@@ -93,7 +93,7 @@ func handleRequest(session *proto.TcpSession, msg *proto.Message, tcpRequest *pr
 	ctx.SendPushRequest()
 }
 
-func formatReponseContent(results []reflect.Value) string {
+func formatResponseContent(results []reflect.Value) string {
 	realVals := make([]interface{}, len(results))
 	for index, val := range results {
 		if resp, ok := val.Interface().(*proto.Response); ok {

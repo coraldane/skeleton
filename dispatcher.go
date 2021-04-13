@@ -87,7 +87,7 @@ func handleRequest(session *proto.TcpSession, msg *proto.Message, tcpRequest *pr
 	msg.Cmd = uint8(proto.RESPONSE)
 	msg.Body = []byte(responseContent)
 
-	logger.Debug(msg.MsgId, msg.Flag, session.GetUserId(), responseContent)
+	logger.Debug("msgId: %s, flag: %d, userId: %d, response: %s", msg.MsgId, msg.Flag, session.GetUserId(), responseContent)
 	session.Write(msg)
 
 	ctx.SendPushRequest()

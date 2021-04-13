@@ -81,7 +81,7 @@ func (this *serverConnection) OnConnected(session *proto.TcpSession) {
 
 func (this *serverConnection) OnDisconnected(session *proto.TcpSession) {
 	this.tcpServer.DeleteSession(session.UniqueKey)
-	logger.Info("connection closed %s, connection num: %d", session.RemoteAddr, session.GetUserId(), this.tcpServer.SessionCount())
+	logger.Info("connection closed %s, uid: %d, session count: %d", session.RemoteAddr, session.GetUserId(), this.tcpServer.SessionCount())
 
 	this.connListener.OnDisconnected(session)
 }

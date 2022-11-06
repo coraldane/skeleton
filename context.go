@@ -11,13 +11,13 @@ type Context struct {
 	userId           int64
 	SessionUniqueKey string
 	pushFunc         func(*models.PushRequest)
-	pushRequestList  *container.SafeList
+	pushRequestList  *container.SafeList[*pushMessage]
 }
 
 func NewContext(otherId int64) *Context {
 	inst := &Context{}
 	inst.userId = otherId
-	inst.pushRequestList = container.NewSafeList()
+	inst.pushRequestList = container.NewSafeList[*pushMessage]()
 	return inst
 }
 
@@ -53,13 +53,11 @@ func (this *Context) SendPushRequest() {
 	}
 
 	for 0 < this.pushRequestList.Len() {
-		item := this.pushRequestList.PopBack()
-		if pushMsg, ok := item.(*pushMessage); ok {
-			if 0 < pushMsg.delay {
-				time.Sleep(pushMsg.delay)
-			}
-			this.pushFunc(pushMsg.request)
+		pushMsg := this.pushRequestList.PopBack()
+		if 0 < pushMsg.delay {
+			time.Sleep(pushMsg.delay)
 		}
+		this.pushFunc(pushMsg.request)
 	}
 }
 
